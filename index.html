@@ -1,40 +1,44 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>EcoAudit - Dashboard Audit & Analisis Sampah</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduMetrics IPAS — Portal Analisis Statistik Lingkungan & Akademik</title>
+  
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   
   <!-- Chart.js CDN -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  
-  <!-- Lucide Icons -->
-  <script src="https://unpkg.com/lucide@latest"></script>
-
-  <!-- Google Fonts: Plus Jakarta Sans -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <script>
     tailwind.config = {
+      darkMode: 'class',
       theme: {
         extend: {
           fontFamily: {
             sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
           },
           colors: {
-            eco: {
-              50: '#f0fdf4',
-              100: '#dcfce7',
-              500: '#22c55e',
-              600: '#16a34a',
-              700: '#15803d',
-              800: '#166534',
-              900: '#14532d',
+            brand: {
+              50: '#ecfdf5',
+              100: '#d1fae5',
+              400: '#34d399',
+              500: '#10b981',
+              600: '#059669',
+              700: '#047857',
+              900: '#064e3b',
+            },
+            accent: {
+              50: '#f0fdfa',
+              500: '#0ea5e9',
+              600: '#0284c7',
             }
           }
         }
@@ -43,823 +47,795 @@
   </script>
 
   <style>
-    /* Kustomisasi scrollbar halus */
+    /* Custom Scrollbar & Micro-details */
     ::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
+      width: 8px;
+      height: 8px;
     }
     ::-webkit-scrollbar-track {
-      background: #f1f5f9;
+      background: rgba(0, 0, 0, 0.03);
+    }
+    .dark ::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.03);
     }
     ::-webkit-scrollbar-thumb {
-      background: #cbd5e1;
+      background: rgba(16, 185, 129, 0.3);
       border-radius: 9999px;
     }
     ::-webkit-scrollbar-thumb:hover {
-      background: #94a3b8;
+      background: rgba(16, 185, 129, 0.6);
     }
-    .chart-container {
-      position: relative;
-      width: 100%;
-      height: 280px;
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(226, 232, 240, 0.8);
+    }
+    .dark .glass-card {
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(51, 65, 85, 0.5);
+    }
+
+    .glow-effect {
+      box-shadow: 0 10px 30px -10px rgba(16, 185, 129, 0.15);
+    }
+    .dark .glow-effect {
+      box-shadow: 0 10px 30px -10px rgba(16, 185, 129, 0.25);
     }
   </style>
 </head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 antialiased font-sans min-h-screen transition-colors duration-300">
 
-<body class="bg-slate-50 text-slate-800 font-sans antialiased min-h-screen flex flex-col">
-
-  <!-- ==================== HEADER & NAVBAR ==================== -->
-  <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-col sm:flex-row items-center justify-between gap-4">
-      <div class="flex items-center space-x-3">
-        <div class="bg-eco-600 text-white p-2.5 rounded-xl shadow-md flex items-center justify-center">
-          <i data-lucide="leaf" class="w-6 h-6"></i>
-        </div>
-        <div>
-          <h1 class="text-xl font-bold text-slate-900 leading-tight">EcoAudit Studio by Zora & Alex</h1>
-          <p class="text-xs text-slate-500 font-medium">Sistem Audit & Analisis Dampak Lingkungan</p>
-        </div>
+  <!-- Top Banner / Badge Tugas Pak Ali -->
+  <div class="bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 text-white text-xs sm:text-sm font-medium py-2 px-4 shadow-sm">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
+      <div class="flex items-center space-x-2">
+        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-white/20 text-white backdrop-blur-sm border border-white/30">
+          Tugas Ke-8 IPAS
+        </span>
+        <span class="font-normal opacity-95 hidden sm:inline">Pengampu:</span>
+        <span class="font-bold underline decoration-emerald-300 decoration-2 underline-offset-2">Pak Ali (Guru IPAS)</span>
+        <span class="hidden md:inline text-white/70">|</span>
+        <span class="hidden md:inline text-white/90">Tema: Implementasi Kaidah UI/UX Modern pada Sistem Analisis Data Statistik</span>
       </div>
-
-      <!-- Navigasi Tab & Aksi Cepat -->
-      <div class="flex items-center space-x-2 bg-slate-100 p-1.5 rounded-xl border border-slate-200 text-sm">
-        <button id="tab-input-btn" onclick="switchTab('input')" class="flex items-center space-x-1.5 px-4 py-1.5 rounded-lg font-semibold transition-all bg-white text-eco-700 shadow-sm">
-          <i data-lucide="plus-circle" class="w-4 h-4"></i>
-          <span>Input & Data</span>
-        </button>
-        <button id="tab-results-btn" onclick="switchTab('results')" class="flex items-center space-x-1.5 px-4 py-1.5 rounded-lg font-semibold transition-all text-slate-600 hover:text-slate-900">
-          <i data-lucide="pie-chart" class="w-4 h-4"></i>
-          <span>Lihat Hasil & Grafik</span>
-        </button>
-      </div>
-    </div>
-  </header>
-
-  <!-- ==================== TOAST NOTIFICATION CONTAINER ==================== -->
-  <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col space-y-2 pointer-events-none"></div>
-
-  <!-- ==================== MAIN CONTENT ==================== -->
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-1 w-full space-y-6">
-
-    <!-- RINGKASAN METRIK CEPAT (KPI BANNER) -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-      <!-- Total Berat -->
-      <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-xs flex items-center justify-between">
-        <div>
-          <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Total Sampah</p>
-          <h3 id="kpi-total-weight" class="text-2xl font-extrabold text-slate-800 mt-1">0.00 kg</h3>
-          <p class="text-xs text-slate-500 mt-0.5"><span id="kpi-item-count">0</span> item tercatat</p>
-        </div>
-        <div class="p-3 bg-blue-50 text-blue-600 rounded-xl">
-          <i data-lucide="scale" class="w-6 h-6"></i>
-        </div>
-      </div>
-
-      <!-- Sampah Terbanyak -->
-      <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-xs flex items-center justify-between">
-        <div>
-          <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Komponen Terbanyak</p>
-          <h3 id="kpi-top-category" class="text-xl font-bold text-slate-800 mt-1 truncate max-w-[150px]">-</h3>
-          <p id="kpi-top-category-weight" class="text-xs text-slate-500 mt-0.5">0% dari total</p>
-        </div>
-        <div class="p-3 bg-amber-50 text-amber-600 rounded-xl">
-          <i data-lucide="trending-up" class="w-6 h-6"></i>
-        </div>
-      </div>
-
-      <!-- Estimasi Jejak Karbon -->
-      <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-xs flex items-center justify-between">
-        <div>
-          <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Potensi Emisi CO₂e</p>
-          <h3 id="kpi-carbon" class="text-2xl font-extrabold text-rose-600 mt-1">0.0 kg</h3>
-          <p class="text-xs text-rose-500 font-medium mt-0.5">Dampak pemanasan global</p>
-        </div>
-        <div class="p-3 bg-rose-50 text-rose-600 rounded-xl">
-          <i data-lucide="flame" class="w-6 h-6"></i>
-        </div>
-      </div>
-
-      <!-- Potensi Daur Ulang -->
-      <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-xs flex items-center justify-between">
-        <div>
-          <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Potensi Daur Ulang</p>
-          <h3 id="kpi-recyclable-rate" class="text-2xl font-extrabold text-eco-600 mt-1">0%</h3>
-          <p id="kpi-recyclable-weight" class="text-xs text-eco-700 mt-0.5">Dapat diolah kembali</p>
-        </div>
-        <div class="p-3 bg-eco-50 text-eco-600 rounded-xl">
-          <i data-lucide="recycle" class="w-6 h-6"></i>
-        </div>
-      </div>
-    </div>
-
-    <!-- ==================== VIEW 1: TAB INPUT & DATA ==================== -->
-    <div id="view-input" class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-      
-      <!-- FORM INPUT AUDIT -->
-      <div class="lg:col-span-5 space-y-6">
-        <div class="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200 shadow-xs">
-          <div class="flex items-center justify-between pb-4 border-b border-slate-100 mb-5">
-            <div class="flex items-center space-x-2">
-              <i data-lucide="clipboard-pen" class="w-5 h-5 text-eco-600"></i>
-              <h2 class="text-lg font-bold text-slate-800">Formulir Audit Sampah</h2>
-            </div>
-            <span class="text-xs font-medium bg-eco-50 text-eco-700 px-2.5 py-1 rounded-full">Tambah Data</span>
-          </div>
-
-          <form id="waste-form" onsubmit="handleFormSubmit(event)" class="space-y-4">
-            <!-- Nama / Deskripsi Sampah -->
-            <div>
-              <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5" for="item-name">
-                Nama / Spesifikasi Sampah <span class="text-rose-500">*</span>
-              </label>
-              <input 
-                type="text" 
-                id="item-name" 
-                placeholder="Contoh: Botol Air Mineral PET, Sisa Nasi, Kardus" 
-                required
-                class="w-full px-3.5 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-eco-500 focus:bg-white transition"
-              />
-            </div>
-
-            <!-- Grid: Kategori Utama & Sub-Material -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-              <!-- Kategori Utama -->
-              <div>
-                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5" for="item-category">
-                  Kategori Utama <span class="text-rose-500">*</span>
-                </label>
-                <select 
-                  id="item-category" 
-                  onchange="updateSubCategories()"
-                  class="w-full px-3.5 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-eco-500 focus:bg-white transition"
-                >
-                  <option value="Organik">🌿 Organik (Hayati)</option>
-                  <option value="Anorganik" selected>🧴 Anorganik (Sintetis)</option>
-                  <option value="B3">⚠️ B3 / Limbah Khusus</option>
-                </select>
-              </div>
-
-              <!-- Sub Jenis Material -->
-              <div>
-                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5" for="item-subtype">
-                  Jenis Material <span class="text-rose-500">*</span>
-                </label>
-                <select 
-                  id="item-subtype" 
-                  class="w-full px-3.5 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-eco-500 focus:bg-white transition"
-                >
-                  <!-- Diisi secara dinamis oleh JS -->
-                </select>
-              </div>
-            </div>
-
-            <!-- Grid: Berat (kg) & Lokasi Sumber -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-              <div>
-                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5" for="item-weight">
-                  Berat (Kilogram) <span class="text-rose-500">*</span>
-                </label>
-                <div class="relative">
-                  <input 
-                    type="number" 
-                    step="0.01" 
-                    min="0.01" 
-                    id="item-weight" 
-                    placeholder="0.00" 
-                    required
-                    class="w-full pl-3.5 pr-10 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-eco-500 focus:bg-white transition"
-                  />
-                  <span class="absolute right-3 top-2.5 text-xs font-bold text-slate-400">kg</span>
-                </div>
-              </div>
-
-              <div>
-                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5" for="item-source">
-                  Sumber / Lokasi Audit
-                </label>
-                <input 
-                  type="text" 
-                  id="item-source" 
-                  placeholder="Dapur, Kantor, Kantin, Gudang" 
-                  value="Area Rumah Tangga"
-                  class="w-full px-3.5 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-eco-500 focus:bg-white transition"
-                />
-              </div>
-            </div>
-
-            <!-- Status Pengolahan / Daur Ulang -->
-            <div>
-              <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
-                Kondisi / Kelayakan Daur Ulang
-              </label>
-              <div class="grid grid-cols-3 gap-2 text-xs">
-                <label class="flex items-center p-2.5 bg-slate-50 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-100 transition">
-                  <input type="radio" name="recyclability" value="high" checked class="text-eco-600 focus:ring-eco-500" />
-                  <span class="ml-2 font-medium text-slate-700">Tinggi (Bersih)</span>
-                </label>
-                <label class="flex items-center p-2.5 bg-slate-50 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-100 transition">
-                  <input type="radio" name="recyclability" value="medium" class="text-eco-600 focus:ring-eco-500" />
-                  <span class="ml-2 font-medium text-slate-700">Bisa Didaur Ulang</span>
-                </label>
-                <label class="flex items-center p-2.5 bg-slate-50 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-100 transition">
-                  <input type="radio" name="recyclability" value="low" class="text-eco-600 focus:ring-eco-500" />
-                  <span class="ml-2 font-medium text-slate-700">Residu / Kotor</span>
-                </label>
-              </div>
-            </div>
-
-            <!-- Tombol Submit & Aksi Cepat -->
-            <div class="pt-2 flex flex-col sm:flex-row gap-2">
-              <button 
-                type="submit" 
-                class="flex-1 bg-eco-600 hover:bg-eco-700 text-white font-semibold py-2.5 px-4 rounded-xl shadow-md transition-all flex items-center justify-center space-x-2 active:scale-98"
-              >
-                <i data-lucide="plus" class="w-4 h-4"></i>
-                <span>Simpan Item Sampah</span>
-              </button>
-            </div>
-          </form>
-
-          <!-- Banner Aksi 'Lihat Hasil' -->
-          <div class="mt-5 p-4 bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-100 rounded-2xl flex items-center justify-between">
-            <div class="flex items-center space-x-3">
-              <div class="bg-emerald-500 text-white p-2 rounded-xl">
-                <i data-lucide="bar-chart-3" class="w-5 h-5"></i>
-              </div>
-              <div>
-                <h4 class="text-sm font-bold text-emerald-950">Sudah Selesai Input?</h4>
-                <p class="text-xs text-emerald-700">Lihat visualisasi dan dampak lingkungan secara komprehensif.</p>
-              </div>
-            </div>
-            <button 
-              onclick="switchTab('results')" 
-              class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-4 py-2 rounded-xl transition shadow-xs whitespace-nowrap"
-            >
-              Lihat Hasil →
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- TABEL DATA AUDIT -->
-      <div class="lg:col-span-7 space-y-4">
-        <div class="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden flex flex-col h-full">
-          
-          <!-- Header Tabel & Filter -->
-          <div class="p-4 sm:p-5 border-b border-slate-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-            <div>
-              <h3 class="text-base font-bold text-slate-800">Daftar Sampah Terdata</h3>
-              <p class="text-xs text-slate-500">Semua data item yang telah dimasukkan ke dalam sistem audit.</p>
-            </div>
-            <div class="flex items-center space-x-2 w-full sm:w-auto">
-              <select id="filter-category" onchange="renderTable()" class="text-xs bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1.5 font-medium text-slate-600 focus:outline-none focus:ring-1 focus:ring-eco-500">
-                <option value="all">Semua Kategori</option>
-                <option value="Organik">Organik</option>
-                <option value="Anorganik">Anorganik</option>
-                <option value="B3">B3</option>
-              </select>
-              <button onclick="resetDataConfirmation()" title="Reset ke data awal" class="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg border border-slate-200 transition text-xs flex items-center space-x-1">
-                <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
-                <span class="hidden sm:inline">Reset</span>
-              </button>
-            </div>
-          </div>
-
-          <!-- Container Tabel -->
-          <div class="overflow-x-auto flex-1">
-            <table class="w-full text-left text-xs">
-              <thead class="bg-slate-50 text-slate-500 uppercase font-semibold border-b border-slate-100">
-                <tr>
-                  <th class="py-3 px-4">Nama Sampah</th>
-                  <th class="py-3 px-4">Kategori</th>
-                  <th class="py-3 px-4">Material</th>
-                  <th class="py-3 px-4 text-right">Berat</th>
-                  <th class="py-3 px-4 text-center">Dampak</th>
-                  <th class="py-3 px-4 text-center">Aksi</th>
-                </tr>
-              </thead>
-              <tbody id="waste-table-body" class="divide-y divide-slate-100 font-medium text-slate-700">
-                <!-- Baris Data diisi oleh JS -->
-              </tbody>
-            </table>
-            
-            <!-- State Kosong jika tidak ada data -->
-            <div id="empty-state" class="hidden flex-col items-center justify-center py-12 px-4 text-center">
-              <i data-lucide="inbox" class="w-12 h-12 text-slate-300 mb-2"></i>
-              <h4 class="text-sm font-bold text-slate-700">Belum ada data sampah</h4>
-              <p class="text-xs text-slate-400 max-w-xs mt-1">Tambahkan data melalui formulir di sisi kiri untuk memulai audit lingkungan Anda.</p>
-            </div>
-          </div>
-
-          <!-- Footer Tabel -->
-          <div class="p-3.5 bg-slate-50 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
-            <span>Menampilkan <strong id="table-row-count" class="text-slate-800">0</strong> item</span>
-            <button onclick="exportToCSV()" class="text-eco-700 font-bold hover:underline flex items-center space-x-1">
-              <i data-lucide="download" class="w-3.5 h-3.5"></i>
-              <span>Ekspor CSV</span>
-            </button>
-          </div>
-
-        </div>
-      </div>
-
-    </div>
-
-    <!-- ==================== VIEW 2: TAB HASIL & GRAFIK ==================== -->
-    <div id="view-results" class="hidden space-y-6">
-      
-      <!-- Top Action Bar -->
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-4 rounded-2xl border border-slate-200 shadow-xs">
-        <div>
-          <h2 class="text-lg font-bold text-slate-800 flex items-center space-x-2">
-            <i data-lucide="chart-pie" class="w-5 h-5 text-eco-600"></i>
-            <span>Hasil Analisis & Visualisasi Audit Sampah</span>
-          </h2>
-          <p class="text-xs text-slate-500">Kalkulasi cerdas komposisi sampah, jejak emisi, dan rekomendasi perbaikan.</p>
-        </div>
-        <div class="flex items-center space-x-2">
-          <button onclick="switchTab('input')" class="bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold px-3.5 py-2 rounded-xl transition flex items-center space-x-1.5">
-            <i data-lucide="arrow-left" class="w-4 h-4"></i>
-            <span>Kembali ke Input</span>
-          </button>
-          <button onclick="window.print()" class="bg-eco-600 hover:bg-eco-700 text-white text-xs font-semibold px-3.5 py-2 rounded-xl transition flex items-center space-x-1.5 shadow-xs">
-            <i data-lucide="printer" class="w-4 h-4"></i>
-            <span>Cetak Laporan</span>
-          </button>
-        </div>
-      </div>
-
-      <!-- GRID GRAFIK UTAMA -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        
-        <!-- GRAFIK 1: Komposisi Utama (Organik vs Anorganik vs B3) -->
-        <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs flex flex-col justify-between">
-          <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-2">
-            <div>
-              <h3 class="text-sm font-bold text-slate-800">Komposisi Sampah Global</h3>
-              <p class="text-xs text-slate-400">Proporsi Organik vs Anorganik vs B3 (kg)</p>
-            </div>
-            <span class="p-1.5 bg-emerald-50 text-emerald-600 rounded-lg">
-              <i data-lucide="pie-chart" class="w-4 h-4"></i>
-            </span>
-          </div>
-          <div class="chart-container">
-            <canvas id="chart-category-composition"></canvas>
-          </div>
-          <div id="composition-legend" class="mt-3 pt-3 border-t border-slate-100 grid grid-cols-3 gap-2 text-center text-xs">
-            <!-- Legend Dinamis -->
-          </div>
-        </div>
-
-        <!-- GRAFIK 2: Sampah Terbanyak Berdasarkan Material -->
-        <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs flex flex-col justify-between">
-          <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-2">
-            <div>
-              <h3 class="text-sm font-bold text-slate-800">Volume Sampah Terbanyak</h3>
-              <p class="text-xs text-slate-400">Peringkat akumulasi berat berdasarkan sub-material (kg)</p>
-            </div>
-            <span class="p-1.5 bg-blue-50 text-blue-600 rounded-lg">
-              <i data-lucide="bar-chart-2" class="w-4 h-4"></i>
-            </span>
-          </div>
-          <div class="chart-container">
-            <canvas id="chart-top-materials"></canvas>
-          </div>
-          <div class="mt-3 text-xs text-slate-500 bg-slate-50 p-2.5 rounded-xl flex items-center justify-between">
-            <span>Material Dominan: <strong id="highest-material-name" class="text-slate-800">-</strong></span>
-            <span id="highest-material-weight" class="font-bold text-blue-600">0 kg</span>
-          </div>
-        </div>
-
-        <!-- GRAFIK 3: Dampak Lingkungan (Jejak Karbon CO2e) -->
-        <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs flex flex-col justify-between">
-          <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-2">
-            <div>
-              <h3 class="text-sm font-bold text-slate-800">Sampah Paling Berdampak Lingkungan</h3>
-              <p class="text-xs text-slate-400">Estimasi beban emisi karbon CO₂ equivalent (kg CO₂e)</p>
-            </div>
-            <span class="p-1.5 bg-rose-50 text-rose-600 rounded-lg">
-              <i data-lucide="alert-triangle" class="w-4 h-4"></i>
-            </span>
-          </div>
-          <div class="chart-container">
-            <canvas id="chart-environmental-impact"></canvas>
-          </div>
-          <div class="mt-3 text-xs text-rose-700 bg-rose-50 p-2.5 rounded-xl flex items-center space-x-2">
-            <i data-lucide="info" class="w-4 h-4 shrink-0"></i>
-            <span>Semakin tinggi emisi, semakin besar kontribusi terhadap degradasi iklim & polusi.</span>
-          </div>
-        </div>
-
-        <!-- GRAFIK 4: Profil Waktu Penguraian Material -->
-        <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs flex flex-col justify-between">
-          <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-2">
-            <div>
-              <h3 class="text-sm font-bold text-slate-800">Karakteristik Ketahanan di Alam</h3>
-              <p class="text-xs text-slate-400">Estimasi waktu dekomposisi alami (Skala Tahun)</p>
-            </div>
-            <span class="p-1.5 bg-purple-50 text-purple-600 rounded-lg">
-              <i data-lucide="hourglass" class="w-4 h-4"></i>
-            </span>
-          </div>
-          <div class="chart-container">
-            <canvas id="chart-decomposition-timeline"></canvas>
-          </div>
-          <div class="mt-3 text-xs text-slate-500 bg-slate-50 p-2.5 rounded-xl flex items-center justify-between">
-            <span>Sampah Paling Abadi: <strong id="longest-waste-name" class="text-purple-700">-</strong></span>
-            <span id="longest-waste-time" class="font-bold text-purple-700">~0 thn</span>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- KARTU INSIGHT & REKOMENDASI AKSI LINGKUNGAN -->
-      <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs">
-        <div class="flex items-center space-x-3 mb-4 pb-3 border-b border-slate-100">
-          <div class="bg-eco-100 text-eco-800 p-2.5 rounded-xl">
-            <i data-lucide="sparkles" class="w-5 h-5"></i>
-          </div>
-          <div>
-            <h3 class="text-base font-bold text-slate-900">Rekomendasi Rencana Aksi Reduksi Sampah</h3>
-            <p class="text-xs text-slate-500">Saran cerdas yang disesuaikan secara otomatis dengan hasil audit Anda.</p>
-          </div>
-        </div>
-
-        <div id="recommendations-container" class="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <!-- Card Rekomendasi diisi oleh JavaScript -->
-        </div>
-      </div>
-
-    </div>
-
-  </main>
-
-  <!-- ==================== MODAL KONFIRMASI CUSTOM ==================== -->
-  <div id="custom-modal" class="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center hidden p-4">
-    <div class="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl space-y-4 text-center">
-      <div id="modal-icon-container" class="w-12 h-12 bg-rose-100 text-rose-600 rounded-full flex items-center justify-center mx-auto">
-        <i data-lucide="alert-circle" class="w-6 h-6"></i>
-      </div>
-      <div>
-        <h3 id="modal-title" class="text-base font-bold text-slate-900">Konfirmasi</h3>
-        <p id="modal-message" class="text-xs text-slate-500 mt-1.5">Apakah Anda yakin ingin melakukan aksi ini?</p>
-      </div>
-      <div class="flex space-x-2 pt-2">
-        <button id="modal-cancel-btn" onclick="closeModal()" class="flex-1 px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition">
-          Batal
-        </button>
-        <button id="modal-confirm-btn" class="flex-1 px-4 py-2.5 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold rounded-xl transition">
-          Lanjutkan
-        </button>
+      <div class="flex items-center space-x-3 text-xs">
+        <span class="flex items-center gap-1.5 bg-black/15 px-2.5 py-1 rounded-full">
+          <span class="w-2 h-2 rounded-full bg-emerald-300 animate-pulse"></span>
+          Kaidah UI/UX: Terverifikasi 100%
+        </span>
       </div>
     </div>
   </div>
 
-  <!-- ==================== JAVASCRIPT LOGIC ==================== -->
-  <script>
-    // ==========================================
-    // 1. DATA MASTER MATERIAL & FAKTOR EMISI
-    // ==========================================
-    const MATERIAL_PRESETS = {
-      Organik: [
-        { name: 'Sisa Makanan / Dapur', carbonFactor: 1.2, decompYears: 0.1, color: '#22c55e', danger: 'Rendah' },
-        { name: 'Daun & Ranting Kebun', carbonFactor: 0.3, decompYears: 0.4, color: '#84cc16', danger: 'Rendah' },
-        { name: 'Kertas & Karton Basah', carbonFactor: 0.8, decompYears: 0.3, color: '#a3e635', danger: 'Rendah' },
-        { name: 'Ampas Kopi & Teh', carbonFactor: 0.2, decompYears: 0.2, color: '#15803d', danger: 'Rendah' }
-      ],
-      Anorganik: [
-        { name: 'Plastik PET (Botol Minuman)', carbonFactor: 3.5, decompYears: 450, color: '#3b82f6', danger: 'Tinggi' },
-        { name: 'Kantong Kresek (LDPE/HDPE)', carbonFactor: 4.8, decompYears: 200, color: '#06b6d4', danger: 'Sangat Tinggi' },
-        { name: 'Styrofoam / Kemasan Sekali Pakai', carbonFactor: 6.2, decompYears: 500, color: '#f43f5e', danger: 'Kritis' },
-        { name: 'Kertas Karton / Box Kardus Kering', carbonFactor: 1.1, decompYears: 0.5, color: '#f59e0b', danger: 'Rendah' },
-        { name: 'Kaca & Botol Beling', carbonFactor: 1.8, decompYears: 1000, color: '#8b5cf6', danger: 'Sedang' },
-        { name: 'Kaleng Alumunium & Besi', carbonFactor: 2.2, decompYears: 100, color: '#64748b', danger: 'Sedang' },
-        { name: 'Tekstil / Pakaian Bekas', carbonFactor: 3.8, decompYears: 40, color: '#ec4899', danger: 'Tinggi' },
-        { name: 'Sachet Multilayer Foil', carbonFactor: 5.5, decompYears: 300, color: '#ea580c', danger: 'Sangat Tinggi' }
-      ],
-      B3: [
-        { name: 'Baterai & Akumulator Bekas', carbonFactor: 9.5, decompYears: 100, color: '#e11d48', danger: 'Kritis' },
-        { name: 'Lampu Neon / Bohlam CFL', carbonFactor: 7.2, decompYears: 200, color: '#d97706', danger: 'Kritis' },
-        { name: 'Limbah Medis (Masker/Jarum)', carbonFactor: 8.0, decompYears: 150, color: '#be123c', danger: 'Kritis' },
-        { name: 'Elektronik Kecil (E-Waste)', carbonFactor: 10.0, decompYears: 300, color: '#4c1d95', danger: 'Kritis' }
-      ]
-    };
+  <header class="sticky top-0 z-40 glass-card border-b transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <!-- Logo & Branding -->
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-400 flex items-center justify-center text-white shadow-lg shadow-emerald-500/25">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+            </svg>
+          </div>
+          <div>
+            <div class="flex items-center space-x-1.5">
+              <h1 class="text-lg font-bold tracking-tight bg-gradient-to-r from-emerald-700 to-teal-500 dark:from-emerald-400 dark:to-teal-300 bg-clip-text text-transparent">
+                EduMetrics IPAS
+              </h1>
+              <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
+                Awigya Zoraa
+              </span>
+            </div>
+            <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Statistika Sains Lingkungan & Presensi Siswa</p>
+          </div>
+        </div>
 
-    // Data Awal untuk Demo (Realistic Data)
-    const INITIAL_DATA = [
-      { id: '1', name: 'Sisa Nasi & Sayur Restoran', category: 'Organik', subType: 'Sisa Makanan / Dapur', weight: 14.5, recyclability: 'medium', source: 'Dapur Utama', date: '2026-09-02' },
-      { id: '2', name: 'Botol Air Mineral 600ml', category: 'Anorganik', subType: 'Plastik PET (Botol Minuman)', weight: 8.2, recyclability: 'high', source: 'Kantin', date: '2026-09-02' },
-      { id: '3', name: 'Kantong Belanja Kresek', category: 'Anorganik', subType: 'Kantong Kresek (LDPE/HDPE)', weight: 4.8, recyclability: 'low', source: 'Lobi & Toko', date: '2026-09-02' },
-      { id: '4', name: 'Kemasan Makanan Cepat Saji', category: 'Anorganik', subType: 'Styrofoam / Kemasan Sekali Pakai', weight: 3.6, recyclability: 'low', source: 'Area Parkir', date: '2026-09-02' },
-      { id: '5', name: 'Kardus Box Pengiriman', category: 'Anorganik', subType: 'Kertas Karton / Box Kardus Kering', weight: 11.0, recyclability: 'high', source: 'Gudang Logistik', date: '2026-09-02' },
-      { id: '6', name: 'Baterai Jam Dinding & Remote', category: 'B3', subType: 'Baterai & Akumulator Bekas', weight: 1.2, recyclability: 'low', source: 'Ruang Kantor', date: '2026-09-02' }
+        <!-- Navigation Tabs -->
+        <nav class="hidden md:flex items-center space-x-1 p-1 bg-slate-100 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 text-xs font-semibold">
+          <button onclick="switchTab('dashboard')" id="nav-btn-dashboard" class="tab-link px-3.5 py-2 rounded-lg bg-white dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 shadow-sm transition">
+            Dashboard Utama
+          </button>
+          <button onclick="switchTab('calculator')" id="nav-btn-calculator" class="tab-link px-3.5 py-2 rounded-lg text-slate-600 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 transition">
+            Kalkulator Statistika Riil
+          </button>
+          <button onclick="switchTab('datasiswa')" id="nav-btn-datasiswa" class="tab-link px-3.5 py-2 rounded-lg text-slate-600 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 transition">
+            Data Siswa & Presensi
+          </button>
+          <button onclick="switchTab('kaidah')" id="nav-btn-kaidah" class="tab-link px-3.5 py-2 rounded-lg text-slate-600 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 transition">
+            Kaidah UI/UX Tugas
+          </button>
+        </nav>
+
+        <!-- Right action icons: Theme toggle & Export -->
+        <div class="flex items-center space-x-2">
+          <!-- Theme Toggle Button -->
+          <button id="themeToggleBtn" onclick="toggleDarkMode()" aria-label="Toggle Theme" class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 transition text-slate-600 dark:text-slate-300">
+            <svg id="themeIconSun" class="w-4 h-4 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 9h1m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M12 5a7 7 0 100 14 7 7 0 000-14z"/>
+            </svg>
+            <svg id="themeIconMoon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+            </svg>
+          </button>
+
+          <!-- Export Report Button -->
+          <button onclick="triggerExportNotice()" class="inline-flex items-center space-x-1.5 bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white font-medium text-xs px-3.5 py-2 rounded-xl shadow-sm transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+            <span class="hidden sm:inline">Unduh Rekap IPAS</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+
+    <!-- Page Context & Realtime Filter Banner -->
+    <div class="glass-card rounded-2xl p-5 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+      <div>
+        <div class="flex items-center space-x-2 text-xs text-emerald-700 dark:text-emerald-400 font-semibold tracking-wide uppercase">
+          <span>Studi Kasus Pembelajaran IPAS</span>
+          <span>•</span>
+          <span>Fase E / Kelas X-2</span>
+        </div>
+        <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white mt-1">
+          Observasi Ekologi, Partisipasi & Capaian Belajar Siswa
+        </h2>
+        <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-0.5">
+          Disusun untuk pembuktian penguasaan Kaidah Desain Antarmuka (UI) & Pengalaman Pengguna (UX) dalam penyajian data kuantitatif.
+        </p>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-2">
+        <label for="cohortFilter" class="text-xs font-semibold text-slate-600 dark:text-slate-300">Sampel Kelas:</label>
+        <select id="cohortFilter" onchange="handleCohortChange(this.value)" class="text-xs rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 px-3 py-2 font-medium focus:ring-2 focus:ring-emerald-500 outline-none">
+          <option value="all">Seluruh Gugus IPAS (36 Siswa)</option>
+          <option value="tim-a">Kelompok Riset 1 (Ekologi Mangrove)</option>
+          <option value="tim-b">Kelompok Riset 2 (Energi Biomassa)</option>
+          <option value="tim-c">Kelompok Riset 3 (Audit Sampah 3R)</option>
+        </select>
+        <button onclick="refreshDataMock()" class="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 transition" title="Acak / Segarkan Data Uji">
+          <svg class="w-4 h-4 text-slate-600 dark:text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div id="tab-dashboard" class="space-y-6">
+
+      <!-- Bento Grid: Key Metric KPI Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <!-- Card 1 -->
+        <div class="glass-card glow-effect p-5 rounded-2xl relative overflow-hidden transition-all duration-300 hover:-translate-y-1">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Total Sampel Riset</span>
+            <span class="p-2 rounded-xl bg-emerald-50 text-emerald-600 dark:bg-emerald-950/60 dark:text-emerald-400">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+              </svg>
+            </span>
+          </div>
+          <div class="mt-3">
+            <span id="kpi-total-siswa" class="text-3xl font-extrabold text-slate-900 dark:text-white">36</span>
+            <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 ml-1">Siswa Terverifikasi</span>
+          </div>
+          <div class="mt-2 flex items-center text-xs text-emerald-600 dark:text-emerald-400 font-semibold">
+            <svg class="w-3.5 h-3.5 mr-1" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L11 9.586 14.586 6H12z" clip-rule="evenodd"/>
+            </svg>
+            <span>100% Mengikuti Siklus Praktikum</span>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="glass-card glow-effect p-5 rounded-2xl relative overflow-hidden transition-all duration-300 hover:-translate-y-1">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Rerata Nilai IPAS</span>
+            <span class="p-2 rounded-xl bg-blue-50 text-blue-600 dark:bg-blue-950/60 dark:text-blue-400">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+            </span>
+          </div>
+          <div class="mt-3">
+            <span id="kpi-avg-score" class="text-3xl font-extrabold text-slate-900 dark:text-white">88.4</span>
+            <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 ml-1">/ 100 Skala KKM 75</span>
+          </div>
+          <div class="mt-2 flex items-center text-xs text-blue-600 dark:text-blue-400 font-semibold">
+            <span>+4.2 poin dibanding modul sebelumnya</span>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="glass-card glow-effect p-5 rounded-2xl relative overflow-hidden transition-all duration-300 hover:-translate-y-1">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Tingkat Kehadiran Lab</span>
+            <span class="p-2 rounded-xl bg-teal-50 text-teal-600 dark:bg-teal-950/60 dark:text-teal-400">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+              </svg>
+            </span>
+          </div>
+          <div class="mt-3">
+            <span id="kpi-presensi" class="text-3xl font-extrabold text-slate-900 dark:text-white">96.8%</span>
+            <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 ml-1">Presensi Aktif</span>
+          </div>
+          <div class="mt-2 flex items-center text-xs text-teal-600 dark:text-teal-400 font-semibold">
+            <span>Presensi tertinggi: Praktikum Lapangan</span>
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="glass-card glow-effect p-5 rounded-2xl relative overflow-hidden transition-all duration-300 hover:-translate-y-1">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Indeks Eco-Campus</span>
+            <span class="p-2 rounded-xl bg-amber-50 text-amber-600 dark:bg-amber-950/60 dark:text-amber-400">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+            </span>
+          </div>
+          <div class="mt-3">
+            <span id="kpi-eco" class="text-3xl font-extrabold text-slate-900 dark:text-white">92.1</span>
+            <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 ml-1">Kategori: Lestari</span>
+          </div>
+          <div class="mt-2 flex items-center text-xs text-emerald-600 dark:text-emerald-400 font-semibold">
+            <span>342 kg Emisi Karbon Terkurangi</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        <!-- Chart 1: Partisipasi & Presensi Sepanjang Minggu -->
+        <div class="lg:col-span-2 glass-card p-5 rounded-2xl flex flex-col justify-between">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+            <div>
+              <h3 class="text-base font-bold text-slate-900 dark:text-white">Tren Kehadiran & Partisipasi Proyek Lingkungan</h3>
+              <p class="text-xs text-slate-500 dark:text-slate-400">Fluktuasi kehadiran mingguan selama 8 pekan pelaksanaan modul IPAS</p>
+            </div>
+            <div class="flex items-center space-x-2 text-xs">
+              <span class="inline-flex items-center px-2 py-1 rounded-md bg-emerald-50 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300 font-medium">
+                Pekan 1 - 8
+              </span>
+            </div>
+          </div>
+          <div class="relative w-full h-72">
+            <canvas id="trendPresensiChart"></canvas>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 text-xs text-slate-500 dark:text-slate-400 flex items-center justify-between">
+            <span>Insight UI/UX: Menggunakan visualisasi garis kurva halus (*cubic interpolation*) untuk mengurangi ketegangan visual pengamat data.</span>
+            <span class="font-bold text-emerald-600 dark:text-emerald-400">Puncak Partisipasi: Mg 6</span>
+          </div>
+        </div>
+
+        <!-- Chart 2: Komposisi Pengelolaan Sampah Sekolah (Donut) -->
+        <div class="glass-card p-5 rounded-2xl flex flex-col justify-between">
+          <div>
+            <h3 class="text-base font-bold text-slate-900 dark:text-white">Audit Komposisi Sampah IPAS</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Hasil survei pemilahan materi daur ulang di lingkungan sekolah</p>
+          </div>
+          <div class="relative w-full h-64 flex items-center justify-center my-2">
+            <canvas id="sampahDoughnutChart"></canvas>
+          </div>
+          <div class="space-y-1.5 text-xs text-slate-600 dark:text-slate-300">
+            <div class="flex justify-between items-center">
+              <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span> Organik (Kompos)</span>
+              <span class="font-bold">45.2%</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-cyan-500"></span> Kertas/Karton</span>
+              <span class="font-bold">28.4%</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span> Plastik PET/HDPE</span>
+              <span class="font-bold">18.6%</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span> Residu Non-Daur</span>
+              <span class="font-bold">7.8%</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Chart 3 & Module Performance (Radar / Grouped Bar) -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        
+        <!-- Komparasi Capaian Aspek IPAS -->
+        <div class="glass-card p-5 rounded-2xl">
+          <div class="flex justify-between items-center mb-3">
+            <div>
+              <h3 class="text-base font-bold text-slate-900 dark:text-white">Distribusi Nilai Aspek IPAS</h3>
+              <p class="text-xs text-slate-500 dark:text-slate-400">Perbandingan capaian kompetensi sains alamiah & analisis sosial</p>
+            </div>
+          </div>
+          <div class="relative w-full h-64">
+            <canvas id="barKompetensiChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Radar Kompetensi Holistik -->
+        <div class="glass-card p-5 rounded-2xl flex flex-col justify-between">
+          <div>
+            <h3 class="text-base font-bold text-slate-900 dark:text-white">Evaluasi Holistik 5 Dimensi IPAS</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Profil integrasi kemampuan teoritis, praktikum & dampak sosial</p>
+          </div>
+          <div class="relative w-full h-64 flex items-center justify-center">
+            <canvas id="radarKompetensiChart"></canvas>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div id="tab-calculator" class="hidden space-y-6">
+      <div class="glass-card p-6 rounded-2xl">
+        <div class="max-w-3xl">
+          <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">Engine Komputasi Data</span>
+          <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white mt-1">
+            Kalkulator Statistika Riil (Live Statistical Engine)
+          </h2>
+          <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
+            Fitur interaktif ini menghitung parameter statistika deskriptif secara otomatis dari data set yang Anda masukkan atau manipulasi langsung secara dinamis.
+          </p>
+        </div>
+
+        <!-- Input Area -->
+        <div class="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="lg:col-span-2 space-y-3">
+            <label for="customDataInput" class="block text-xs font-bold text-slate-700 dark:text-slate-300">
+              Kumpulan Data Skor Praktikum / Pengukuran IPAS (Pisahkan dengan koma):
+            </label>
+            <div class="relative">
+              <input type="text" id="customDataInput" value="84, 88, 92, 79, 95, 88, 76, 90, 85, 94, 88, 91, 82, 89, 78, 85, 96, 90, 87, 88" 
+                     class="w-full font-mono text-sm px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-emerald-500 outline-none shadow-inner">
+            </div>
+            
+            <div class="flex flex-wrap items-center gap-2 pt-1">
+              <button onclick="calculateManualStats()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow transition">
+                Hitung Ulang Statistika
+              </button>
+              <button onclick="loadPresetDataset('phAir')" class="px-3 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-medium rounded-xl transition">
+                Dataset: Uji pH Air Kolam
+              </button>
+              <button onclick="loadPresetDataset('kelembaban')" class="px-3 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-medium rounded-xl transition">
+                Dataset: Kelembaban Tanah (%)
+              </button>
+            </div>
+          </div>
+
+          <!-- Quick Information Box -->
+          <div class="bg-emerald-50/70 dark:bg-emerald-950/30 p-4 rounded-xl border border-emerald-200/50 dark:border-emerald-800/40 text-xs space-y-2">
+            <h4 class="font-bold text-emerald-900 dark:text-emerald-300 flex items-center gap-1.5">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+              Prinsip Kaidah Pengolahan Data
+            </h4>
+            <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+              Sesuai kaidah sains IPAS, pengukuran tendensi sentral (Mean, Median, Modus) dan dispersi (Standar Deviasi) digunakan untuk menguji validitas hasil observasi eksperimental.
+            </p>
+          </div>
+        </div>
+
+        <!-- Statistical Results Dashboard -->
+        <div class="mt-8">
+          <h3 class="text-sm font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-4">
+            Hasil Ekstraksi Parameter Statistika
+          </h3>
+
+          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+            
+            <div class="p-4 rounded-xl bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700">
+              <span class="text-[11px] font-semibold text-slate-500 dark:text-slate-400 block">Banyak Data (n)</span>
+              <span id="stat-n" class="text-2xl font-black text-slate-800 dark:text-white font-mono mt-1 block">20</span>
+              <span class="text-[10px] text-slate-400">Sampel Pengamatan</span>
+            </div>
+
+            <div class="p-4 rounded-xl bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700">
+              <span class="text-[11px] font-semibold text-slate-500 dark:text-slate-400 block">Rata-rata (Mean)</span>
+              <span id="stat-mean" class="text-2xl font-black text-emerald-600 dark:text-emerald-400 font-mono mt-1 block">87.20</span>
+              <span class="text-[10px] text-slate-400">x̄ = (Σ x) / n</span>
+            </div>
+
+            <div class="p-4 rounded-xl bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700">
+              <span class="text-[11px] font-semibold text-slate-500 dark:text-slate-400 block">Nilai Tengah (Median)</span>
+              <span id="stat-median" class="text-2xl font-black text-teal-600 dark:text-teal-400 font-mono mt-1 block">88.00</span>
+              <span class="text-[10px] text-slate-400">Kuartil 2 (Q2)</span>
+            </div>
+
+            <div class="p-4 rounded-xl bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700">
+              <span class="text-[11px] font-semibold text-slate-500 dark:text-slate-400 block">Modus (Mode)</span>
+              <span id="stat-mode" class="text-2xl font-black text-cyan-600 dark:text-cyan-400 font-mono mt-1 block">88</span>
+              <span class="text-[10px] text-slate-400">Frekuensi Terbanyak</span>
+            </div>
+
+            <div class="p-4 rounded-xl bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700">
+              <span class="text-[11px] font-semibold text-slate-500 dark:text-slate-400 block">Standar Deviasi (s)</span>
+              <span id="stat-std" class="text-2xl font-black text-blue-600 dark:text-blue-400 font-mono mt-1 block">5.42</span>
+              <span class="text-[10px] text-slate-400">Tingkat Variasi</span>
+            </div>
+
+            <div class="p-4 rounded-xl bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700">
+              <span class="text-[11px] font-semibold text-slate-500 dark:text-slate-400 block">Rentang (Min - Max)</span>
+              <span id="stat-range" class="text-lg font-black text-indigo-600 dark:text-indigo-400 font-mono mt-1 block">76 — 96</span>
+              <span class="text-[10px] text-slate-400">Jangkauan (Range: 20)</span>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div id="tab-datasiswa" class="hidden space-y-6">
+      
+      <div class="glass-card p-6 rounded-2xl">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200 dark:border-slate-800">
+          <div>
+            <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">
+              Tabel Matriks Penilaian Praktikum IPAS & Kehadiran
+            </h2>
+            <p class="text-xs text-slate-500 dark:text-slate-400">
+              Daftar partisipasi individual siswa pada proyek penelitian lingkungan hidup
+            </p>
+          </div>
+          
+          <div class="flex items-center gap-2">
+            <div class="relative">
+              <input type="text" id="tableSearchInput" onkeyup="filterStudentTable()" placeholder="Cari nama siswa / topik..." 
+                     class="text-xs pl-8 pr-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 focus:ring-2 focus:ring-emerald-500 outline-none w-48 sm:w-64">
+              <svg class="w-4 h-4 text-slate-400 absolute left-2.5 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+              </svg>
+            </div>
+            
+            <button onclick="exportCSVData()" class="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold flex items-center gap-1.5 transition">
+              <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+              </svg>
+              <span>Export CSV</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Responsive Table Container -->
+        <div class="mt-4 overflow-x-auto">
+          <table class="w-full text-left text-xs whitespace-nowrap" id="studentTable">
+            <thead class="bg-slate-100/70 dark:bg-slate-800/60 uppercase tracking-wider text-slate-500 dark:text-slate-400 font-bold border-y border-slate-200 dark:border-slate-800">
+              <tr>
+                <th class="py-3 px-4">NIS</th>
+                <th class="py-3 px-4">Nama Siswa</th>
+                <th class="py-3 px-4">Fokus Riset IPAS</th>
+                <th class="py-3 px-4">Kehadiran (Lab)</th>
+                <th class="py-3 px-4">Skor Uji Teori</th>
+                <th class="py-3 px-4">Skor Praktikum</th>
+                <th class="py-3 px-4">Predikat Akhir</th>
+              </tr>
+            </thead>
+            <tbody id="studentTableBody" class="divide-y divide-slate-100 dark:divide-slate-800/60 font-medium">
+              <!-- Dynamically populated via JS -->
+            </tbody>
+          </table>
+        </div>
+
+        <div class="mt-4 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 dark:text-slate-400 gap-2">
+          <span id="tableCountDisplay">Menampilkan 8 dari 36 Siswa</span>
+          <div class="flex items-center space-x-1">
+            <button class="px-2.5 py-1 rounded bg-slate-100 dark:bg-slate-800 hover:bg-slate-200">Prev</button>
+            <span class="px-2 font-bold text-emerald-600">1</span>
+            <button class="px-2.5 py-1 rounded bg-slate-100 dark:bg-slate-800 hover:bg-slate-200">Next</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div id="tab-kaidah" class="hidden space-y-6">
+      <div class="glass-card p-6 rounded-2xl">
+        <div class="max-w-3xl">
+          <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">Laporan Tugas Ke-8 IPAS</span>
+          <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white mt-1">
+            Justifikasi Kaidah UI/UX yang Diterapkan
+          </h2>
+          <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
+            Dokumentasi lengkap pemenuhan standar desain interaksi manusia & komputer untuk penilaian Pak Ali.
+          </p>
+        </div>
+
+        <div class="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          
+          <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
+            <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300 flex items-center justify-center font-bold text-sm mb-3">
+              1
+            </div>
+            <h3 class="text-sm font-bold text-slate-900 dark:text-white">Hierarki Visual & Bento Grid</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">
+              Informasi kuantitatif penting (KPI cards) diletakkan di posisi paling atas (*above the fold*), memudahkan pembaca menyerap ringkasan statistik esensial hanya dalam 3 detik pertama.
+            </p>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
+            <div class="w-8 h-8 rounded-lg bg-teal-100 text-teal-700 dark:bg-teal-950 dark:text-teal-300 flex items-center justify-center font-bold text-sm mb-3">
+              2
+            </div>
+            <h3 class="text-sm font-bold text-slate-900 dark:text-white">Keterbacaan & Kontras Warna (WCAG)</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">
+              Memenuhi rasio kontras 4.5:1 untuk teks dan grafik. Dilengkapi mode Gelap (*Dark Mode*) dan Terang (*Light Mode*) otomatis untuk mengurangi kelelahan visual saat menganalisis angka.
+            </p>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
+            <div class="w-8 h-8 rounded-lg bg-cyan-100 text-cyan-700 dark:bg-cyan-950 dark:text-cyan-300 flex items-center justify-center font-bold text-sm mb-3">
+              3
+            </div>
+            <h3 class="text-sm font-bold text-slate-900 dark:text-white">Umpan Balik Pengguna & Responsivitas</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">
+              Setiap tombol aksi memiliki status interaktif (*hover state*, *active state* mikro-animasi), transisi transparan, dan notifikasi konfirmasi langsung (*toast alert*) tanpa memakai pop-up sistem usang.
+            </p>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
+            <div class="w-8 h-8 rounded-lg bg-blue-100 text-blue-700 dark:bg-blue-950 dark:text-blue-300 flex items-center justify-center font-bold text-sm mb-3">
+              4
+            </div>
+            <h3 class="text-sm font-bold text-slate-900 dark:text-white">Pemberian Makna Data (Color Psychology)</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">
+              Nuansa warna *Emerald* dan *Teal* dipilih merepresentasikan IPAS Lingkungan Hidup & Konservasi Alam, sedangkan warna status (*badge*) hijau, biru, dan kuning memberi kejelasan status siswa tanpa bias emosional.
+            </p>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
+            <div class="w-8 h-8 rounded-lg bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-300 flex items-center justify-center font-bold text-sm mb-3">
+              5
+            </div>
+            <h3 class="text-sm font-bold text-slate-900 dark:text-white">Interaktivitas & Eksplorasi Mandiri</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">
+              Pengguna (Pak Ali) dapat langsung mengubah dataset di tab kalkulator untuk menguji rumus matematika statistika riil secara instan tanpa perlu me-*reload* halaman browser.
+            </p>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
+            <div class="w-8 h-8 rounded-lg bg-purple-100 text-purple-700 dark:bg-purple-950 dark:text-purple-300 flex items-center justify-center font-bold text-sm mb-3">
+              6
+            </div>
+            <h3 class="text-sm font-bold text-slate-900 dark:text-white">Kemudahan Akses Data (Export Ready)</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">
+              Penyediaan fitur pencarian instan pada tabel dan tombol ekspor format CSV sesuai kaidah *Data Portability* untuk pelaporan berkala guru dan wali kelas.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <div id="toastNotification" class="fixed bottom-6 right-6 z-50 transform translate-y-32 opacity-0 transition-all duration-300 pointer-events-none">
+    <div class="glass-card bg-slate-900/90 text-white dark:bg-white/95 dark:text-slate-900 px-4 py-3 rounded-2xl shadow-2xl flex items-center space-x-3 border border-emerald-500/40">
+      <div class="w-7 h-7 rounded-full bg-emerald-500 flex items-center justify-center text-white text-xs font-bold">
+        ✓
+      </div>
+      <div>
+        <p id="toastMessage" class="text-xs font-bold">Aksi Berhasil Dijalankan</p>
+        <p id="toastSubMessage" class="text-[11px] text-slate-400 dark:text-slate-600">EduMetrics IPAS terintegrasi secara otomatis.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // State Application
+    let currentTheme = 'light';
+    let chartTrend = null;
+    let chartSampah = null;
+    let chartBar = null;
+    let chartRadar = null;
+
+    // Data Mock Siswa IPAS
+    const studentsData = [
+      { nis: "24101", nama: "Aditya Pratama", topik: "Ekologi Mangrove & Salinitas", presensi: 98, teori: 88, praktek: 94, predikat: "Sangat Baik" },
+      { nis: "24102", nama: "Anindya Putri Rahayu", topik: "Audit Sampah Plastik 3R", presensi: 96, teori: 92, praktek: 90, predikat: "Sangat Baik" },
+      { nis: "24103", nama: "Bagas Satrio Utomo", topik: "Biomassa Limbah Tebu", presensi: 92, teori: 84, praktek: 85, predikat: "Baik" },
+      { nis: "24104", nama: "Cantika Dwi Lestari", topik: "Dinamika Sosial Konsumsi Air", presensi: 100, teori: 95, praktek: 98, predikat: "Sangat Baik" },
+      { nis: "24105", nama: "Daffa Arya Nugraha", topik: "Mitigasi Bencana Erosi", presensi: 90, teori: 80, praktek: 82, predikat: "Baik" },
+      { nis: "24106", nama: "Fatimah Azzahra", topik: "Ekologi Mangrove & Salinitas", presensi: 94, teori: 89, praktek: 91, predikat: "Sangat Baik" },
+      { nis: "24107", nama: "Gilang Ramadhan", topik: "Energi Sel Surya Miniatur", presensi: 88, teori: 78, praktek: 80, predikat: "Baik" },
+      { nis: "24108", nama: "Hafizah Nurul Ilmi", topik: "Kompos Fermentasi EM4", presensi: 98, teori: 94, praktek: 96, predikat: "Sangat Baik" },
+      { nis: "24109", nama: "Irfan Maulana", topik: "Biomassa Limbah Tebu", presensi: 86, teori: 75, praktek: 78, predikat: "Perlu Bimbingan" },
+      { nis: "24110", nama: "Jasmine Khairunnisa", topik: "Kualitas pH Tanah Pertanian", presensi: 96, teori: 90, praktek: 92, predikat: "Sangat Baik" }
     ];
 
-    // State Aplikasi
-    let auditList = JSON.parse(JSON.stringify(INITIAL_DATA));
-    let activeTab = 'input';
-    let chartInstances = {};
-
-    // ==========================================
-    // 2. INISIALISASI SAAT HALAMAN DIBUKA
-    // ==========================================
-    window.addEventListener('DOMContentLoaded', () => {
-      lucide.createIcons();
-      updateSubCategories();
-      renderAll();
+    // Initialize Page
+    document.addEventListener("DOMContentLoaded", () => {
+      initTheme();
+      renderStudentTable(studentsData);
+      initCharts();
+      calculateManualStats();
     });
 
-    // Helper: Mencari Preset berdasarkan Kategori & SubType
-    function getPresetInfo(category, subType) {
-      const list = MATERIAL_PRESETS[category] || [];
-      const found = list.find(p => p.name === subType);
-      if (found) return found;
-      return { name: subType, carbonFactor: 2.0, decompYears: 10, color: '#94a3b8', danger: 'Sedang' };
-    }
-
-    // ==========================================
-    // 3. UI STATE & TAB NAVIGATION
-    // ==========================================
-    function switchTab(tab) {
-      activeTab = tab;
-      const inputView = document.getElementById('view-input');
-      const resultsView = document.getElementById('view-results');
-      const inputBtn = document.getElementById('tab-input-btn');
-      const resultsBtn = document.getElementById('tab-results-btn');
-
-      if (tab === 'input') {
-        inputView.classList.remove('hidden');
-        resultsView.classList.add('hidden');
-        inputBtn.className = 'flex items-center space-x-1.5 px-4 py-1.5 rounded-lg font-semibold transition-all bg-white text-eco-700 shadow-sm';
-        resultsBtn.className = 'flex items-center space-x-1.5 px-4 py-1.5 rounded-lg font-semibold transition-all text-slate-600 hover:text-slate-900';
+    // Dark Mode Controller
+    function initTheme() {
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        setTheme('dark');
       } else {
-        inputView.classList.add('hidden');
-        resultsView.classList.remove('hidden');
-        resultsBtn.className = 'flex items-center space-x-1.5 px-4 py-1.5 rounded-lg font-semibold transition-all bg-white text-eco-700 shadow-sm';
-        inputBtn.className = 'flex items-center space-x-1.5 px-4 py-1.5 rounded-lg font-semibold transition-all text-slate-600 hover:text-slate-900';
-        
-        // Render grafik setiap kali tab hasil dibuka
-        renderCharts();
+        setTheme('light');
       }
-      lucide.createIcons();
     }
 
-    // Update Dropdown Subkategori saat Kategori Utama Berubah
-    function updateSubCategories() {
-      const catSelect = document.getElementById('item-category');
-      const subSelect = document.getElementById('item-subtype');
-      const selectedCat = catSelect.value;
-      const options = MATERIAL_PRESETS[selectedCat] || [];
-
-      subSelect.innerHTML = options.map(opt => `<option value="${opt.name}">${opt.name}</option>`).join('');
+    function toggleDarkMode() {
+      setTheme(currentTheme === 'light' ? 'dark' : 'light');
     }
 
-    // ==========================================
-    // 4. FORM HANDLING & CRUD
-    // ==========================================
-    function handleFormSubmit(event) {
-      event.preventDefault();
-      
-      const name = document.getElementById('item-name').value.trim();
-      const category = document.getElementById('item-category').value;
-      const subType = document.getElementById('item-subtype').value;
-      const weight = parseFloat(document.getElementById('item-weight').value);
-      const source = document.getElementById('item-source').value.trim() || 'Umum';
-      const recyclability = document.querySelector('input[name="recyclability"]:checked').value;
+    function setTheme(theme) {
+      currentTheme = theme;
+      const html = document.documentElement;
+      const sun = document.getElementById('themeIconSun');
+      const moon = document.getElementById('themeIconMoon');
 
-      if (!name || isNaN(weight) || weight <= 0) {
-        showToast('Mohon masukkan nama sampah dan berat yang valid!', 'error');
-        return;
+      if (theme === 'dark') {
+        html.classList.add('dark');
+        sun.classList.remove('hidden');
+        moon.classList.add('hidden');
+      } else {
+        html.classList.remove('dark');
+        sun.classList.add('hidden');
+        moon.classList.remove('hidden');
       }
 
-      const newItem = {
-        id: Date.now().toString(),
-        name,
-        category,
-        subType,
-        weight,
-        source,
-        recyclability,
-        date: new Date().toISOString().split('T')[0]
-      };
-
-      auditList.unshift(newItem);
-      
-      // Reset form
-      document.getElementById('item-name').value = '';
-      document.getElementById('item-weight').value = '';
-      document.getElementById('item-name').focus();
-
-      showToast(`Sukses mencatat ${name} (${weight} kg)`, 'success');
-      renderAll();
-    }
-
-    function deleteItem(id) {
-      const item = auditList.find(i => i.id === id);
-      const itemName = item ? item.name : 'item';
-      
-      openModal(
-        'Hapus Item Sampah', 
-        `Apakah Anda yakin ingin menghapus data "${itemName}" dari audit?`,
-        () => {
-          auditList = auditList.filter(i => i.id !== id);
-          renderAll();
-          showToast('Item berhasil dihapus.', 'info');
-          closeModal();
-        }
-      );
-    }
-
-    function resetDataConfirmation() {
-      openModal(
-        'Reset Data Sampah',
-        'Kembalikan seluruh data audit ke setelan awal default?',
-        () => {
-          auditList = JSON.parse(JSON.stringify(INITIAL_DATA));
-          renderAll();
-          showToast('Data audit berhasil di-reset.', 'info');
-          closeModal();
-        }
-      );
-    }
-
-    // ==========================================
-    // 5. RENDER TABEL & KPI DASHBOARD
-    // ==========================================
-    function renderAll() {
-      renderTable();
-      updateKPIs();
-      if (activeTab === 'results') {
-        renderCharts();
+      // Re-render chart colors if charts exist
+      if (chartTrend) {
+        updateChartThemes();
       }
-      lucide.createIcons();
     }
 
-    function renderTable() {
-      const tbody = document.getElementById('waste-table-body');
-      const emptyState = document.getElementById('empty-state');
-      const filter = document.getElementById('filter-category').value;
-      
-      const filtered = filter === 'all' 
-        ? auditList 
-        : auditList.filter(item => item.category === filter);
-
-      document.getElementById('table-row-count').textContent = filtered.length;
-
-      if (filtered.length === 0) {
-        tbody.innerHTML = '';
-        emptyState.classList.remove('hidden');
-        emptyState.classList.add('flex');
-        return;
-      }
-
-      emptyState.classList.add('hidden');
-      emptyState.classList.remove('flex');
-
-      tbody.innerHTML = filtered.map(item => {
-        const preset = getPresetInfo(item.category, item.subType);
-        
-        // Badge Warna Kategori
-        let catBadge = '';
-        if (item.category === 'Organik') {
-          catBadge = `<span class="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">🌿 Organik</span>`;
-        } else if (item.category === 'Anorganik') {
-          catBadge = `<span class="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-semibold bg-blue-50 text-blue-700 border border-blue-200">🧴 Anorganik</span>`;
+    // Tab Navigation Logic
+    function switchTab(tabId) {
+      const tabs = ['dashboard', 'calculator', 'datasiswa', 'kaidah'];
+      tabs.forEach(t => {
+        const el = document.getElementById(`tab-${t}`);
+        const btn = document.getElementById(`nav-btn-${t}`);
+        if (t === tabId) {
+          el.classList.remove('hidden');
+          btn.classList.add('bg-white', 'dark:bg-slate-800', 'text-emerald-600', 'dark:text-emerald-400', 'shadow-sm');
+          btn.classList.remove('text-slate-600', 'dark:text-slate-300');
         } else {
-          catBadge = `<span class="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-semibold bg-rose-50 text-rose-700 border border-rose-200">⚠️ B3 Khusus</span>`;
+          el.classList.add('hidden');
+          btn.classList.remove('bg-white', 'dark:bg-slate-800', 'text-emerald-600', 'dark:text-emerald-400', 'shadow-sm');
+          btn.classList.add('text-slate-600', 'dark:text-slate-300');
+        }
+      });
+      showToast("Beralih Navigasi", `Membuka tampilan modul: ${tabId.toUpperCase()}`);
+    }
+
+    // Render Data Siswa
+    function renderStudentTable(data) {
+      const tbody = document.getElementById('studentTableBody');
+      tbody.innerHTML = '';
+
+      data.forEach(item => {
+        let badgeClass = "bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300";
+        if (item.predikat === "Sangat Baik") {
+          badgeClass = "bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300";
+        } else if (item.predikat === "Perlu Bimbingan") {
+          badgeClass = "bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300";
         }
 
-        // Badge Tingkat Dampak
-        let impactBadge = '';
-        if (preset.danger === 'Kritis' || preset.danger === 'Sangat Tinggi') {
-          impactBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-100 text-rose-800">Tinggi</span>`;
-        } else if (preset.danger === 'Tinggi' || preset.danger === 'Sedang') {
-          impactBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-800">Sedang</span>`;
-        } else {
-          impactBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800">Rendah</span>`;
-        }
-
-        return `
-          <tr class="hover:bg-slate-50 transition border-b border-slate-100">
-            <td class="py-3 px-4">
-              <div class="font-bold text-slate-800 text-xs">${escapeHtml(item.name)}</div>
-              <div class="text-[11px] text-slate-400 font-normal">Lokasi: ${escapeHtml(item.source)}</div>
-            </td>
-            <td class="py-3 px-4">${catBadge}</td>
-            <td class="py-3 px-4 text-slate-600 text-xs">${escapeHtml(item.subType)}</td>
-            <td class="py-3 px-4 text-right font-extrabold text-slate-900">${item.weight.toFixed(2)} kg</td>
-            <td class="py-3 px-4 text-center">${impactBadge}</td>
-            <td class="py-3 px-4 text-center">
-              <button onclick="deleteItem('${item.id}')" class="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition" title="Hapus">
-                <i data-lucide="trash-2" class="w-4 h-4"></i>
-              </button>
-            </td>
-          </tr>
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-slate-50/60 dark:hover:bg-slate-800/40 transition-colors";
+        tr.innerHTML = `
+          <td class="py-3 px-4 font-mono font-semibold text-slate-500">${item.nis}</td>
+          <td class="py-3 px-4 font-bold text-slate-800 dark:text-white flex items-center space-x-2">
+            <span class="w-6 h-6 rounded-full bg-emerald-100 dark:bg-emerald-900 text-emerald-700 dark:text-emerald-300 flex items-center justify-center text-[10px] font-black">
+              ${item.nama.charAt(0)}
+            </span>
+            <span>${item.nama}</span>
+          </td>
+          <td class="py-3 px-4 text-slate-600 dark:text-slate-300">${item.topik}</td>
+          <td class="py-3 px-4 font-mono">${item.presensi}%</td>
+          <td class="py-3 px-4 font-mono">${item.teori}</td>
+          <td class="py-3 px-4 font-mono font-semibold text-emerald-600 dark:text-emerald-400">${item.praktek}</td>
+          <td class="py-3 px-4">
+            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold ${badgeClass}">
+              ${item.predikat}
+            </span>
+          </td>
         `;
-      }).join('');
+        tbody.appendChild(tr);
+      });
 
-      lucide.createIcons();
+      document.getElementById('tableCountDisplay').innerText = `Menampilkan ${data.length} dari ${studentsData.length} Sampel Data Siswa`;
     }
 
-    function updateKPIs() {
-      const totalWeight = auditList.reduce((acc, curr) => acc + curr.weight, 0);
-      const totalItems = auditList.length;
+    // Filter Table Search
+    function filterStudentTable() {
+      const keyword = document.getElementById('tableSearchInput').value.toLowerCase();
+      const filtered = studentsData.filter(s => 
+        s.nama.toLowerCase().includes(keyword) || 
+        s.topik.toLowerCase().includes(keyword) ||
+        s.nis.includes(keyword)
+      );
+      renderStudentTable(filtered);
+    }
 
-      // Hitung Total Jejak Karbon
-      let totalCarbon = 0;
-      let recyclableWeight = 0;
-      const categoryWeights = { Organik: 0, Anorganik: 0, B3: 0 };
+    // Charts Initialization
+    function initCharts() {
+      const isDark = currentTheme === 'dark';
+      const textColor = isDark ? '#94a3b8' : '#64748b';
+      const gridColor = isDark ? 'rgba(51, 65, 85, 0.4)' : 'rgba(226, 232, 240, 0.7)';
 
-      auditList.forEach(item => {
-        const preset = getPresetInfo(item.category, item.subType);
-        totalCarbon += item.weight * preset.carbonFactor;
-        categoryWeights[item.category] = (categoryWeights[item.category] || 0) + item.weight;
-        
-        if (item.recyclability === 'high' || item.recyclability === 'medium') {
-          recyclableWeight += item.weight;
+      // 1. Trend Presensi Line Chart
+      const ctxTrend = document.getElementById('trendPresensiChart').getContext('2d');
+      chartTrend = new Chart(ctxTrend, {
+        type: 'line',
+        data: {
+          labels: ['Pekan 1', 'Pekan 2', 'Pekan 3', 'Pekan 4', 'Pekan 5', 'Pekan 6', 'Pekan 7', 'Pekan 8'],
+          datasets: [
+            {
+              label: 'Partisipasi Praktikum IPAS (%)',
+              data: [92, 94, 91, 95, 96, 99, 97, 98],
+              borderColor: '#10b981',
+              backgroundColor: 'rgba(16, 185, 129, 0.1)',
+              tension: 0.35,
+              fill: true,
+              pointBackgroundColor: '#10b981',
+              pointRadius: 4,
+              pointHoverRadius: 6
+            },
+            {
+              label: 'Kehadiran Sesi Teori Kelas (%)',
+              data: [96, 95, 93, 94, 95, 96, 94, 96],
+              borderColor: '#0284c7',
+              borderDash: [5, 5],
+              tension: 0.35,
+              fill: false,
+              pointBackgroundColor: '#0284c7',
+              pointRadius: 3
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'top',
+              labels: { color: textColor, font: { family: 'Plus Jakarta Sans', size: 11, weight: '600' } }
+            }
+          },
+          scales: {
+            x: {
+              grid: { color: gridColor },
+              ticks: { color: textColor, font: { family: 'Plus Jakarta Sans', size: 10 } }
+            },
+            y: {
+              min: 80,
+              max: 100,
+              grid: { color: gridColor },
+              ticks: { color: textColor, font: { family: 'Plus Jakarta Sans', size: 10 } }
+            }
+          }
         }
       });
 
-      // Cari Kategori Terbanyak
-      let topCat = '-';
-      let maxCatWeight = 0;
-      for (const [cat, w] of Object.entries(categoryWeights)) {
-        if (w > maxCatWeight) {
-          maxCatWeight = w;
-          topCat = cat;
-        }
-      }
-
-      const topCatPercent = totalWeight > 0 ? ((maxCatWeight / totalWeight) * 100).toFixed(0) : 0;
-      const recyclablePercent = totalWeight > 0 ? ((recyclableWeight / totalWeight) * 100).toFixed(0) : 0;
-
-      document.getElementById('kpi-total-weight').textContent = `${totalWeight.toFixed(2)} kg`;
-      document.getElementById('kpi-item-count').textContent = totalItems;
-      document.getElementById('kpi-top-category').textContent = topCat;
-      document.getElementById('kpi-top-category-weight').textContent = `${topCatPercent}% (${maxCatWeight.toFixed(1)} kg)`;
-      document.getElementById('kpi-carbon').textContent = `${totalCarbon.toFixed(1)} kg`;
-      document.getElementById('kpi-recyclable-rate').textContent = `${recyclablePercent}%`;
-      document.getElementById('kpi-recyclable-weight').textContent = `${recyclableWeight.toFixed(1)} kg dari total`;
-    }
-
-    // ==========================================
-    // 6. RENDER GRAFIK-GRAFIK ANALISIS (CHART.JS)
-    // ==========================================
-    function destroyChart(id) {
-      if (chartInstances[id]) {
-        chartInstances[id].destroy();
-      }
-    }
-
-    function renderCharts() {
-      renderCategoryCompositionChart();
-      renderTopMaterialsChart();
-      renderEnvironmentalImpactChart();
-      renderDecompositionTimelineChart();
-      renderRecommendations();
-    }
-
-    // 1. Grafik Komposisi Kategori
-    function renderCategoryCompositionChart() {
-      destroyChart('composition');
-
-      const weights = { Organik: 0, Anorganik: 0, B3: 0 };
-      auditList.forEach(item => {
-        weights[item.category] = (weights[item.category] || 0) + item.weight;
-      });
-
-      const total = Object.values(weights).reduce((a, b) => a + b, 0);
-
-      // Render custom legend di bawah
-      const legendEl = document.getElementById('composition-legend');
-      legendEl.innerHTML = `
-        <div class="p-2 bg-emerald-50 rounded-xl">
-          <div class="text-[10px] font-bold text-emerald-800 uppercase">Organik</div>
-          <div class="font-extrabold text-emerald-900">${weights.Organik.toFixed(1)} kg</div>
-          <div class="text-[10px] text-emerald-600">${total > 0 ? ((weights.Organik / total) * 100).toFixed(1) : 0}%</div>
-        </div>
-        <div class="p-2 bg-blue-50 rounded-xl">
-          <div class="text-[10px] font-bold text-blue-800 uppercase">Anorganik</div>
-          <div class="font-extrabold text-blue-900">${weights.Anorganik.toFixed(1)} kg</div>
-          <div class="text-[10px] text-blue-600">${total > 0 ? ((weights.Anorganik / total) * 100).toFixed(1) : 0}%</div>
-        </div>
-        <div class="p-2 bg-rose-50 rounded-xl">
-          <div class="text-[10px] font-bold text-rose-800 uppercase">B3 / Khusus</div>
-          <div class="font-extrabold text-rose-900">${weights.B3.toFixed(1)} kg</div>
-          <div class="text-[10px] text-rose-600">${total > 0 ? ((weights.B3 / total) * 100).toFixed(1) : 0}%</div>
-        </div>
-      `;
-
-      const ctx = document.getElementById('chart-category-composition').getContext('2d');
-      chartInstances['composition'] = new Chart(ctx, {
+      // 2. Sampah Audit Doughnut
+      const ctxSampah = document.getElementById('sampahDoughnutChart').getContext('2d');
+      chartSampah = new Chart(ctxSampah, {
         type: 'doughnut',
         data: {
-          labels: ['Organik', 'Anorganik', 'B3 / Khusus'],
+          labels: ['Organik', 'Kertas/Karton', 'Plastik', 'Residu'],
           datasets: [{
-            data: [weights.Organik, weights.Anorganik, weights.B3],
-            backgroundColor: ['#22c55e', '#3b82f6', '#f43f5e'],
-            borderWidth: 2,
-            borderColor: '#ffffff',
+            data: [45.2, 28.4, 18.6, 7.8],
+            backgroundColor: ['#10b981', '#06b6d4', '#f59e0b', '#f43f5e'],
+            borderWidth: 0,
             hoverOffset: 6
           }]
         },
@@ -867,376 +843,250 @@
           responsive: true,
           maintainAspectRatio: false,
           plugins: {
-            legend: { position: 'bottom', labels: { boxWidth: 12, font: { family: 'Plus Jakarta Sans', size: 11 } } },
-            tooltip: {
-              callbacks: {
-                label: (ctx) => ` ${ctx.label}: ${ctx.raw.toFixed(2)} kg (${total > 0 ? ((ctx.raw/total)*100).toFixed(1) : 0}%)`
-              }
+            legend: { display: false }
+          },
+          cutout: '72%'
+        }
+      });
+
+      // 3. Bar Kompetensi
+      const ctxBar = document.getElementById('barKompetensiChart').getContext('2d');
+      chartBar = new Chart(ctxBar, {
+        type: 'bar',
+        data: {
+          labels: ['Ekologi', 'Energi', 'Audit Sampah', 'Mitigasi', 'Sosial IPAS'],
+          datasets: [
+            {
+              label: 'Rata-rata Skor Praktik',
+              data: [91, 86, 94, 88, 89],
+              backgroundColor: '#10b981',
+              borderRadius: 6
+            },
+            {
+              label: 'Rata-rata Uji Teori',
+              data: [87, 82, 89, 84, 85],
+              backgroundColor: '#38bdf8',
+              borderRadius: 6
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'top',
+              labels: { color: textColor, font: { family: 'Plus Jakarta Sans', size: 11, weight: '600' } }
             }
           },
-          cutout: '68%'
+          scales: {
+            x: {
+              grid: { display: false },
+              ticks: { color: textColor, font: { family: 'Plus Jakarta Sans', size: 10 } }
+            },
+            y: {
+              min: 60,
+              max: 100,
+              grid: { color: gridColor },
+              ticks: { color: textColor, font: { family: 'Plus Jakarta Sans', size: 10 } }
+            }
+          }
+        }
+      });
+
+      // 4. Radar Kompetensi Holistik
+      const ctxRadar = document.getElementById('radarKompetensiChart').getContext('2d');
+      chartRadar = new Chart(ctxRadar, {
+        type: 'radar',
+        data: {
+          labels: ['Observasi Lapangan', 'Pengolahan Sampah', 'Analisis Data', 'Kerja Sama Tim', 'Kaidah Pelaporan'],
+          datasets: [{
+            label: 'Capaian Rombel X-2',
+            data: [93, 89, 92, 95, 90],
+            backgroundColor: 'rgba(16, 185, 129, 0.25)',
+            borderColor: '#10b981',
+            pointBackgroundColor: '#10b981',
+            borderWidth: 2
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false }
+          },
+          scales: {
+            r: {
+              angleLines: { color: gridColor },
+              grid: { color: gridColor },
+              pointLabels: {
+                color: textColor,
+                font: { family: 'Plus Jakarta Sans', size: 10, weight: '600' }
+              },
+              ticks: { display: false, min: 50, max: 100 }
+            }
+          }
         }
       });
     }
 
-    // 2. Grafik Sampah Terbanyak (Berdasarkan Sub-Material)
-    function renderTopMaterialsChart() {
-      destroyChart('topMaterials');
+    function updateChartThemes() {
+      const isDark = currentTheme === 'dark';
+      const textColor = isDark ? '#94a3b8' : '#64748b';
+      const gridColor = isDark ? 'rgba(51, 65, 85, 0.4)' : 'rgba(226, 232, 240, 0.7)';
 
-      const materialMap = {};
-      auditList.forEach(item => {
-        materialMap[item.subType] = (materialMap[item.subType] || 0) + item.weight;
+      [chartTrend, chartBar, chartRadar].forEach(chart => {
+        if (!chart) return;
+        if (chart.options.scales && chart.options.scales.x) {
+          chart.options.scales.x.grid.color = gridColor;
+          chart.options.scales.x.ticks.color = textColor;
+        }
+        if (chart.options.scales && chart.options.scales.y) {
+          chart.options.scales.y.grid.color = gridColor;
+          chart.options.scales.y.ticks.color = textColor;
+        }
+        if (chart.options.plugins && chart.options.plugins.legend) {
+          chart.options.plugins.legend.labels.color = textColor;
+        }
+        chart.update();
       });
+    }
 
-      // Urutkan dari yang terbanyak
-      const sorted = Object.entries(materialMap).sort((a, b) => b[1] - a[1]);
-      const labels = sorted.map(i => i[0]);
-      const dataValues = sorted.map(i => i[1]);
+    // Statistical Engine Logic
+    function calculateManualStats() {
+      const inputStr = document.getElementById('customDataInput').value;
+      const rawArr = inputStr.split(',')
+        .map(item => parseFloat(item.trim()))
+        .filter(item => !isNaN(item));
 
-      if (sorted.length > 0) {
-        document.getElementById('highest-material-name').textContent = sorted[0][0];
-        document.getElementById('highest-material-weight').textContent = `${sorted[0][1].toFixed(2)} kg`;
+      if (rawArr.length === 0) {
+        showToast("Peringatan Data", "Harap masukkan sekurang-kurangnya 1 angka valid!");
+        return;
+      }
+
+      // Sort array for median & quartiles
+      const sorted = [...rawArr].sort((a, b) => a - b);
+      const n = sorted.length;
+
+      // 1. Mean
+      const sum = sorted.reduce((acc, curr) => acc + curr, 0);
+      const mean = sum / n;
+
+      // 2. Median
+      let median = 0;
+      if (n % 2 === 0) {
+        median = (sorted[n / 2 - 1] + sorted[n / 2]) / 2;
       } else {
-        document.getElementById('highest-material-name').textContent = '-';
-        document.getElementById('highest-material-weight').textContent = '0 kg';
+        median = sorted[Math.floor(n / 2)];
       }
 
-      const ctx = document.getElementById('chart-top-materials').getContext('2d');
-      chartInstances['topMaterials'] = new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: labels,
-          datasets: [{
-            label: 'Berat (kg)',
-            data: dataValues,
-            backgroundColor: '#3b82f6',
-            borderRadius: 8
-          }]
-        },
-        options: {
-          indexAxis: 'y',
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: { display: false },
-            tooltip: {
-              callbacks: {
-                label: (ctx) => ` Berat: ${ctx.raw.toFixed(2)} kg`
-              }
-            }
-          },
-          scales: {
-            x: {
-              grid: { color: '#f1f5f9' },
-              ticks: { font: { size: 10 } }
-            },
-            y: {
-              grid: { display: false },
-              ticks: {
-                font: { size: 10, family: 'Plus Jakarta Sans' },
-                callback: function(val, index) {
-                  const label = this.getLabelForValue(val);
-                  return label.length > 18 ? label.substr(0, 18) + '...' : label;
-                }
-              }
-            }
-          }
+      // 3. Modus
+      const freq = {};
+      let maxFreq = 0;
+      sorted.forEach(val => {
+        freq[val] = (freq[val] || 0) + 1;
+        if (freq[val] > maxFreq) maxFreq = freq[val];
+      });
+      const modes = [];
+      for (const key in freq) {
+        if (freq[key] === maxFreq && maxFreq > 1) {
+          modes.push(key);
         }
-      });
+      }
+      const modeStr = modes.length > 0 ? modes.join(', ') : 'Tidak ada';
+
+      // 4. Standar Deviasi (Sampel s)
+      let stdDev = 0;
+      if (n > 1) {
+        const variance = sorted.reduce((acc, val) => acc + Math.pow(val - mean, 2), 0) / (n - 1);
+        stdDev = Math.sqrt(variance);
+      }
+
+      // 5. Min & Max
+      const min = sorted[0];
+      const max = sorted[n - 1];
+
+      // Update UI Counters
+      document.getElementById('stat-n').innerText = n;
+      document.getElementById('stat-mean').innerText = mean.toFixed(2);
+      document.getElementById('stat-median').innerText = median.toFixed(2);
+      document.getElementById('stat-mode').innerText = modeStr;
+      document.getElementById('stat-std').innerText = stdDev.toFixed(2);
+      document.getElementById('stat-range').innerText = `${min} — ${max}`;
+
+      showToast("Statistika Diperbarui", `Sukses mengolah ${n} sampel data riset IPAS.`);
     }
 
-    // 3. Grafik Sampah Paling Berdampak Pada Lingkungan (Emisi CO2e)
-    function renderEnvironmentalImpactChart() {
-      destroyChart('carbonImpact');
-
-      const impactMap = {};
-      auditList.forEach(item => {
-        const preset = getPresetInfo(item.category, item.subType);
-        const itemCO2 = item.weight * preset.carbonFactor;
-        impactMap[item.subType] = (impactMap[item.subType] || 0) + itemCO2;
-      });
-
-      const sorted = Object.entries(impactMap).sort((a, b) => b[1] - a[1]);
-      const labels = sorted.map(i => i[0]);
-      const dataValues = sorted.map(i => i[1]);
-
-      const ctx = document.getElementById('chart-environmental-impact').getContext('2d');
-      chartInstances['carbonImpact'] = new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: labels,
-          datasets: [{
-            label: 'Estimasi Emisi (kg CO₂e)',
-            data: dataValues,
-            backgroundColor: '#f43f5e',
-            borderRadius: 8
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: { display: false },
-            tooltip: {
-              callbacks: {
-                label: (ctx) => ` Emisi Karbon: ${ctx.raw.toFixed(2)} kg CO₂e`
-              }
-            }
-          },
-          scales: {
-            y: {
-              beginAtZero: true,
-              grid: { color: '#f1f5f9' },
-              ticks: { font: { size: 10 } }
-            },
-            x: {
-              grid: { display: false },
-              ticks: {
-                font: { size: 9, family: 'Plus Jakarta Sans' },
-                maxRotation: 45,
-                minRotation: 25,
-                callback: function(val, index) {
-                  const label = this.getLabelForValue(val);
-                  return label.length > 14 ? label.substr(0, 14) + '...' : label;
-                }
-              }
-            }
-          }
-        }
-      });
+    function loadPresetDataset(type) {
+      if (type === 'phAir') {
+        document.getElementById('customDataInput').value = "6.8, 7.0, 7.2, 7.1, 6.9, 7.4, 7.1, 7.0, 6.7, 7.3, 7.1, 7.2";
+      } else if (type === 'kelembaban') {
+        document.getElementById('customDataInput').value = "58, 62, 65, 70, 68, 64, 59, 72, 75, 68, 66, 63, 67, 71";
+      }
+      calculateManualStats();
     }
 
-    // 4. Grafik Estimasi Waktu Penguraian Material
-    function renderDecompositionTimelineChart() {
-      destroyChart('decomp');
-
-      // Ambil subtipe unik yang ada dalam data audit
-      const presentTypes = [...new Set(auditList.map(item => ({ category: item.category, subType: item.subType })))];
-      
-      const typeList = presentTypes.map(pt => {
-        const preset = getPresetInfo(pt.category, pt.subType);
-        return {
-          name: pt.subType,
-          years: preset.decompYears
-        };
-      }).sort((a, b) => b.years - a.years);
-
-      if (typeList.length > 0) {
-        document.getElementById('longest-waste-name').textContent = typeList[0].name;
-        document.getElementById('longest-waste-time').textContent = typeList[0].years >= 1 ? `~${typeList[0].years} Tahun` : `~${(typeList[0].years * 12).toFixed(0)} Bulan`;
+    function handleCohortChange(val) {
+      if (val === 'tim-a') {
+        document.getElementById('kpi-avg-score').innerText = "91.2";
+        document.getElementById('kpi-presensi').innerText = "98.5%";
+      } else if (val === 'tim-b') {
+        document.getElementById('kpi-avg-score').innerText = "85.7";
+        document.getElementById('kpi-presensi').innerText = "94.2%";
+      } else if (val === 'tim-c') {
+        document.getElementById('kpi-avg-score').innerText = "89.4";
+        document.getElementById('kpi-presensi').innerText = "97.1%";
+      } else {
+        document.getElementById('kpi-avg-score').innerText = "88.4";
+        document.getElementById('kpi-presensi').innerText = "96.8%";
       }
-
-      const labels = typeList.map(t => t.name);
-      const dataValues = typeList.map(t => t.years);
-
-      const ctx = document.getElementById('chart-decomposition-timeline').getContext('2d');
-      chartInstances['decomp'] = new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: labels,
-          datasets: [{
-            label: 'Waktu Urai (Tahun)',
-            data: dataValues,
-            backgroundColor: '#8b5cf6',
-            borderRadius: 8
-          }]
-        },
-        options: {
-          indexAxis: 'y',
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: { display: false },
-            tooltip: {
-              callbacks: {
-                label: (ctx) => ` Waktu Dekomposisi: ${ctx.raw >= 1 ? ctx.raw + ' Tahun' : (ctx.raw * 12).toFixed(0) + ' Bulan'}`
-              }
-            }
-          },
-          scales: {
-            x: {
-              type: 'logarithmic',
-              grid: { color: '#f1f5f9' },
-              ticks: { font: { size: 10 } }
-            },
-            y: {
-              grid: { display: false },
-              ticks: {
-                font: { size: 10, family: 'Plus Jakarta Sans' },
-                callback: function(val, index) {
-                  const label = this.getLabelForValue(val);
-                  return label.length > 18 ? label.substr(0, 18) + '...' : label;
-                }
-              }
-            }
-          }
-        }
-      });
+      showToast("Filter Diterapkan", `Data visualisasi disesuaikan untuk: ${val.toUpperCase()}`);
     }
 
-    // ==========================================
-    // 7. GENERATOR REKOMENDASI OTOMATIS
-    // ==========================================
-    function renderRecommendations() {
-      const container = document.getElementById('recommendations-container');
-      
-      const totalWeight = auditList.reduce((a, b) => a + b.weight, 0);
-      if (totalWeight === 0) {
-        container.innerHTML = `<p class="col-span-3 text-xs text-slate-400 text-center py-4">Belum ada data untuk menghasilkan saran aksi.</p>`;
-        return;
-      }
-
-      // Hitung bobot per kategori
-      const weights = { Organik: 0, Anorganik: 0, B3: 0 };
-      auditList.forEach(i => weights[i.category] = (weights[i.category] || 0) + i.weight);
-
-      const recs = [];
-
-      // Rekomendasi Organik
-      if (weights.Organik / totalWeight > 0.35) {
-        recs.push({
-          icon: 'leaf',
-          color: 'emerald',
-          title: 'Implementasi Komposting Mandiri',
-          desc: `Sampah organik mendominasi sebesar ${((weights.Organik/totalWeight)*100).toFixed(0)}%. Terapkan sistem biopori, maggot BSF, atau ember takakura untuk memangkas potensi emisi gas metana.`
-        });
-      }
-
-      // Rekomendasi Plastik / Anorganik
-      if (weights.Anorganik / totalWeight > 0.3) {
-        recs.push({
-          icon: 'recycle',
-          color: 'blue',
-          title: 'Kemitraan Bank Sampah & Daur Ulang',
-          desc: 'Proporsi sampah anorganik cukup tinggi. Lakukan pemilahan botol plastik bersih, karton, dan kaleng untuk disalurkan ke Bank Sampah atau industri daur ulang terdekat.'
-        });
-      }
-
-      // Rekomendasi B3 / Bahaya
-      if (weights.B3 > 0) {
-        recs.push({
-          icon: 'shield-alert',
-          color: 'rose',
-          title: 'Drop-Box Khusus Limbah B3',
-          desc: `Ditemukan ${weights.B3.toFixed(1)} kg limbah berbahaya (B3). Pisahkan baterai dan elektronik bekas ke drop-point resmi agar tidak mencemari air tanah.`
-        });
-      }
-
-      // Rekomendasi Pengurangan Sumber (Zero Waste)
-      recs.push({
-        icon: 'heart-handshake',
-        color: 'teal',
-        title: 'Program Pengurangan Dari Hulu (Refuse)',
-        desc: 'Prioritaskan membawa tas kain belanja sendiri, wadah makan guna ulang, dan tumbler untuk mencegah masuknya plastik kemasan sekali pakai.'
-      });
-
-      container.innerHTML = recs.slice(0, 3).map(r => `
-        <div class="p-4 rounded-2xl border border-slate-200 bg-slate-50/70 hover:bg-slate-50 transition space-y-2">
-          <div class="flex items-center space-x-2.5">
-            <span class="p-2 rounded-xl bg-${r.color}-100 text-${r.color}-700">
-              <i data-lucide="${r.icon}" class="w-4 h-4"></i>
-            </span>
-            <h4 class="text-xs font-bold text-slate-900">${r.title}</h4>
-          </div>
-          <p class="text-xs text-slate-600 leading-relaxed">${r.desc}</p>
-        </div>
-      `).join('');
-
-      lucide.createIcons();
+    function refreshDataMock() {
+      const randomizedScore = (85 + Math.random() * 8).toFixed(1);
+      const randomizedPresensi = (94 + Math.random() * 5).toFixed(1);
+      document.getElementById('kpi-avg-score').innerText = randomizedScore;
+      document.getElementById('kpi-presensi').innerText = `${randomizedPresensi}%`;
+      showToast("Data Diacak", "Sampel simulasi dihitung ulang secara acak.");
     }
 
-    // ==========================================
-    // 8. EKSPOR CSV & UTILITIES
-    // ==========================================
-    function exportToCSV() {
-      if (auditList.length === 0) {
-        showToast('Tidak ada data untuk diekspor!', 'error');
-        return;
-      }
-
-      const headers = ['ID', 'Nama Sampah', 'Kategori', 'Jenis Material', 'Berat (kg)', 'Kelayakan Daur Ulang', 'Lokasi', 'Tanggal'];
-      const rows = auditList.map(item => [
-        item.id,
-        `"${item.name.replace(/"/g, '""')}"`,
-        item.category,
-        `"${item.subType}"`,
-        item.weight,
-        item.recyclability,
-        `"${item.source}"`,
-        item.date
-      ]);
-
-      const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map(e => e.join(','))].join('\n');
+    // Export Handler
+    function exportCSVData() {
+      let csvContent = "data:text/csv;charset=utf-8,";
+      csvContent += "NIS,Nama Siswa,Fokus Riset,Presensi,Teori,Praktik,Predikat\n";
+      studentsData.forEach(s => {
+        csvContent += `${s.nis},"${s.nama}","${s.topik}",${s.presensi}%,${s.teori},${s.praktek},${s.predikat}\n`;
+      });
       const encodedUri = encodeURI(csvContent);
-      const link = document.createElement('a');
-      link.setAttribute('href', encodedUri);
-      link.setAttribute('download', `Audit_Sampah_${new Date().toISOString().split('T')[0]}.csv`);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", "Rekap_Statistik_IPAS_Tugas8_PakAli.csv");
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-
-      showToast('File CSV berhasil diunduh.', 'success');
+      showToast("Unduh Berhasil", "Berkas CSV siap ditinjau oleh Pak Ali.");
     }
 
-    // Custom Toast Notification
-    function showToast(message, type = 'info') {
-      const container = document.getElementById('toast-container');
-      const toast = document.createElement('div');
-      
-      let bg = 'bg-slate-900 text-white';
-      let icon = 'info';
-      if (type === 'success') {
-        bg = 'bg-eco-700 text-white';
-        icon = 'check-circle';
-      } else if (type === 'error') {
-        bg = 'bg-rose-600 text-white';
-        icon = 'alert-triangle';
-      }
+    function triggerExportNotice() {
+      exportCSVData();
+    }
 
-      toast.className = `${bg} pointer-events-auto px-4 py-3 rounded-xl shadow-lg text-xs font-semibold flex items-center space-x-2 transition-all transform duration-300 translate-y-2 opacity-0`;
-      toast.innerHTML = `<i data-lucide="${icon}" class="w-4 h-4"></i><span>${escapeHtml(message)}</span>`;
-      
-      container.appendChild(toast);
-      lucide.createIcons();
+    // Non-intrusive Toast (UX Best Practice: NEVER use alert())
+    let toastTimeout = null;
+    function showToast(title, desc) {
+      const toast = document.getElementById('toastNotification');
+      document.getElementById('toastMessage').innerText = title;
+      document.getElementById('toastSubMessage').innerText = desc;
 
-      // Animasi Masuk
-      setTimeout(() => {
-        toast.classList.remove('translate-y-2', 'opacity-0');
-      }, 10);
+      toast.classList.remove('translate-y-32', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
 
-      // Otomatis Hilang
-      setTimeout(() => {
-        toast.classList.add('opacity-0', 'translate-y-2');
-        setTimeout(() => toast.remove(), 300);
+      if (toastTimeout) clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-32', 'opacity-0');
       }, 3500);
-    }
-
-    // Custom Modal System
-    let modalCallback = null;
-    function openModal(title, message, onConfirm) {
-      document.getElementById('modal-title').textContent = title;
-      document.getElementById('modal-message').textContent = message;
-      modalCallback = onConfirm;
-      document.getElementById('custom-modal').classList.remove('hidden');
-      document.getElementById('modal-confirm-btn').onclick = modalCallback;
-      lucide.createIcons();
-    }
-
-    function closeModal() {
-      document.getElementById('custom-modal').classList.add('hidden');
-      modalCallback = null;
-    }
-
-    function escapeHtml(string) {
-      const entityMap = {
-        '&': '&amp;',
-        '<': '&lt;',
-        '>': '&gt;',
-        '"': '&quot;',
-        "'": '&#39;',
-        '/': '&#x2F;'
-      };
-      return String(string).replace(/[&<>"'/]/g, s => entityMap[s]);
     }
   </script>
 </body>
